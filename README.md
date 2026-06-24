@@ -22,9 +22,13 @@ System administration	Automated backups, health checks, user management
 Step 1: Create the file
 
 #!/bin/bash
-echo "Hello, CSOT!"
+
+echo "Hello!"
+
 echo "User: $(whoami)"
+
 echo "Date: $(date)"
+
 echo "Directory: $(pwd)"
 
 Step 2: Understand the shebang
@@ -36,6 +40,7 @@ The first line #!/bin/bash is called the shebang (or hashbang). It tells the ope
 Step 3: Make it executable and run it
 
 chmod +x hello.sh     # Add execute permission
+
 ./hello.sh            # Run the script
 
 Why ./? The current directory isn't in your PATH by default (for security reasons). The ./ explicitly tells the shell to look in the current directory.
@@ -48,11 +53,14 @@ Variables
 
 Assignment and usage
 
-name="student"             # No spaces around = (this is critical!)
+name="student"    # No spaces around = (this is critical!)
+
 count=3
+
 directory="/var/log"
 
 echo "$name has $count tasks"
+
 echo "Checking $directory"
 
 Common mistake: name = "student" (with spaces) doesn't work — bash interprets it as running a command called name with arguments = and "student".
@@ -60,17 +68,26 @@ Common mistake: name = "student" (with spaces) doesn't work — bash interprets 
 Variable types
 
 # Strings (default)
+
 greeting="Hello, world"
 
+
 # Integers (for arithmetic)
+
 count=42
+
 ((count++))               # Increment
+
 ((result = count * 2))    # Arithmetic
 
 # Arrays
+
 fruits=("apple" "banana" "cherry")
+
 echo "${fruits[0]}"       # First element: apple
+
 echo "${fruits[@]}"       # All elements
+
 echo "${#fruits[@]}"      # Length: 3
 
 <img width="1191" height="345" alt="image" src="https://github.com/user-attachments/assets/dd0eef1c-1eeb-4cc5-89a2-9bce5ff16659" />
@@ -82,10 +99,13 @@ Rule of thumb: Always double-quote your variables ("$var") to prevent word split
 Reading user input
 
 read -p "Enter target IP: " target_ip
+
 echo "Scanning $target_ip..."
 
 # Read silently (for passwords)
+
 read -sp "Enter password: " password
+
 echo  # Newline after hidden input
 
 Conditionals
@@ -108,21 +128,26 @@ fi
 for loops
 
 # Iterate over a range
+
 for i in {1..10}; do
   echo "Attempt $i"
 done
 
 # Iterate over files
+
+
 for file in *.log; do
   echo "Processing: $file ($(wc -l < "$file") lines)"
 done
 
 # C-style for loop
+
 for ((i=0; i<5; i++)); do
   echo "Index: $i"
 done
 
 # Iterate over command output
+
 for user in $(cut -d: -f1 /etc/passwd); do
   echo "User: $user"
 done
@@ -130,6 +155,7 @@ done
 while loops
 
 # Counter-based
+
 counter=1
 while [ $counter -le 5 ]; do
   echo "Count: $counter"
@@ -151,6 +177,7 @@ done
 until loops
 
 # Run until condition becomes true
+
 attempts=0
 until [ $attempts -ge 5 ]; do
   echo "Attempt $((attempts + 1))"
@@ -160,12 +187,15 @@ done
 Loop control
 
 # skip the current iteration
+
+
 for i in {1..10}; do
   [ $i -eq 5 ] && continue    # Skip iteration 5
   echo $i
 done
 
 # exit the loop entirely
+
 for i in {1..100}; do
   [ $i -eq 42 ] && break      # Stop at 42
   echo $i
@@ -174,6 +204,7 @@ done
 Functions
 
 # Define a function
+
 greet() {
   local name="$1"    # local variables don't pollute global scope
   echo "Hello, $name!"
